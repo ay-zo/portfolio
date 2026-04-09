@@ -13,7 +13,7 @@
     "title": "Rethinking offshore planning with AI-powered decision support",
     "year": "2025",
     "tags": ["Offshore Logistics", "AI Design + Dev"],
-    "caseSummary": "Designing an AI-powered planning and decision-support system for offshore logistics operations with real-time optimizations.",
+    "caseSummary": "Designing an AI-powered planning system for real-time logistics optimization in offshore operations",
     "impact": ["Improved On-time delivery", "Reduced non-productive time"],
     "status": "confidential"
   },
@@ -22,7 +22,7 @@
     "title": "Enabling real-time operational intelligence in AI-powered control rooms",
     "year": "2026",
     "tags": ["Offshore Ops", "AI Design + Dev"],
-    "caseSummary": "Designing an AI-powered control room system to enable real-time optimization and decision support.",
+    "caseSummary": "Operationalizing AI in control room workflows to enable real-time decision-making at scale",
     "impact": ["Reduced production losses", "Improved operational efficiency"],
     "status": "confidential"
   }
