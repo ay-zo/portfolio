@@ -59,7 +59,7 @@ const TIMING = {
 const HERO_LINE1_TEXT = "Hey, I'm Andy";
 const HERO_NAME = "Andy";
 const HERO_LINE2_TEXT =
-  "I design intelligent systems for complex problems, driven by curiosity across new environments";
+  "I design intelligent systems for complex problems, letting curiosity guide me into unfamiliar spaces";
 
 /**
  * Renders the landing page.
