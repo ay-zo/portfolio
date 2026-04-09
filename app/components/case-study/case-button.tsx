@@ -15,8 +15,11 @@ export default function CaseButton({ label, href, status }: CaseButtonProps) {
 
   const handleClick = () => {
     if (status === "confidential") {
-      router.push(href);
+      window.location.href = "mailto:andyzhuo101@gmail.com";
+      return;
     }
+
+    router.push(href);
   };
 
   const buttonClass = cn(
