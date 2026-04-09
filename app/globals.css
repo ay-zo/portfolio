@@ -1,26 +1,115 @@
 @import "tailwindcss";
+@plugin "tailwindcss-corner-shape/presets/squircle";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@plugin "tailwind-corner-smoothing";
 
 @theme inline {
+  /* Raw palette */
+  --brand-primary: oklch(0.8585 0.1608 175.75);
+  --brand-secondary: oklch(0.8512 0.1447 199.21);
+  --brand-primary-muted: oklch(0.9505 0.0712 174.06);
+  --brand-secondary-muted: oklch(0.9454 0.0501 208.78);
+
+  --neutral-100: oklch(0.9816 0.0017 247.84);
+  --neutral-200: oklch(0.9417 0.0052 247.88);
+  --neutral-300: oklch(0.9109 0.007 247.9);
+  --neutral-400: oklch(0.8671 0.0106 247.95);
+  --neutral-500: oklch(0.7692 0.0145 248.02);
+  --neutral-600: oklch(0.5575 0.0165 244.89);
+  --neutral-700: oklch(0.4276 0.0147 248.17);
+  --neutral-900: oklch(0.235 0.01 248.2);
+  --neutral-950: oklch(0.18 0.008 248.2);
+
+  /* Semantic colors exposed to Tailwind */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-muted: var(--muted);
+
+  --color-brand-primary: var(--accent-primary);
+  --color-brand-secondary: var(--accent-secondary);
+  --color-brand-primary-muted: var(--accent-primary-muted);
+  --color-brand-secondary-muted: var(--accent-secondary-muted);
+
+  --color-surface-1: var(--surface-1);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-stroke: var(--stroke);
+
+  --color-surface-inverted-1: var(--surface-inverted-1);
+  --color-surface-inverted-2: var(--surface-inverted-2);
+  /* Fonts */
+  --font-sans: var(--font-sans);
+  --font-label: var(--font-label);
+
+  /* Type scale */
+  --text-hero: 5rem;
+  --text-headline: 1.5rem;
+  --text-title: 1rem;
+  --text-body: 0.875rem;
+  --text-label-sm: 0.75rem;
+  --text-label-lg: 1rem;
+  --text-nav-item: 1rem;
+
+  /* Leading */
+  --leading-hero: 6.875rem;
+  --leading-headline: 1.2;
+  --leading-title: 1.4;
+  --leading-body: 1.6;
+  --leading-label-sm: 1.4;
+  --leading-label-lg: 1.4;
+  --leading-nav-item: 1.4;
+
+  /* Weights / tracking */
+  --font-weight-title: 500;
+  --font-weight-body: 400;
+  --font-weight-label: 500;
+  --tracking-label: 0.04em;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  /* Dark default */
+  --background: var(--neutral-950);
+  --foreground: var(--neutral-100);
+
+  --primary: var(--neutral-100);
+  --secondary: var(--neutral-400);
+  --muted: var(--neutral-600);
+
+  --accent-primary: var(--brand-primary);
+  --accent-secondary: var(--brand-secondary);
+  --accent-primary-muted: var(--brand-primary-muted);
+  --accent-secondary-muted: var(--brand-secondary-muted);
+
+  --surface-1: var(--neutral-900);
+  --surface-2: var(--neutral-700);
+  --surface-3: var(--neutral-600);
+
+  --surface-inverted-1: var(--neutral-100);
+  --surface-inverted-2: var(--neutral-400);
+
+  --stroke: oklch(from var(--neutral-700) l c h / 0.25);
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+[data-theme="light"] {
+  --background: var(--neutral-100);
+  --foreground: var(--neutral-950);
+
+  --surface-1: var(--neutral-100);
+  --surface-2: var(--neutral-200);
+  --surface-3: var(--neutral-300);
+
+  --surface-inverted-1: var(--neutral-900);
+  --surface-inverted-2: var(--neutral-700);
+
+  --primary: var(--neutral-950);
+  --secondary: var(--neutral-600);
+  --muted: var(--neutral-500);
+
+  --accent-primary: var(--brand-primary);
+  --accent-secondary: var(--brand-secondary);
+  --accent-primary-muted: var(--brand-primary-muted);
+  --accent-secondary-muted: var(--brand-secondary-muted);
 }

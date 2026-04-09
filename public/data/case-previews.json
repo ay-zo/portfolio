@@ -1,0 +1,29 @@
+[
+  {
+    "id": "flight-ops",
+    "title": "From slow, reactive decisions to end-to-end optimization",
+    "year": "2025",
+    "tags": ["Airline Ops", "Enterprise UX"],
+    "caseSummary": "Designing a rules-based recovery workflow for high-stakes airline operations",
+    "impact": ["~75% faster repairs", "$18-22M recovered value"],
+    "status": "confidential"
+  },
+  {
+    "id": "offshore-logistics",
+    "title": "Rethinking offshore planning with AI-powered decision support",
+    "year": "2025",
+    "tags": ["Offshore Logistics", "AI Design + Dev"],
+    "caseSummary": "Designing an AI-powered planning and decision-support system for offshore logistics operations with real-time optimizations.",
+    "impact": ["Improved On-time delivery", "Reduced non-productive time"],
+    "status": "confidential"
+  },
+  {
+    "id": "control-room-optimization",
+    "title": "Enabling real-time operational intelligence in AI-powered control rooms",
+    "year": "2026",
+    "tags": ["Offshore Ops", "AI Design + Dev"],
+    "caseSummary": "Designing an AI-powered control room system to enable real-time optimization and decision support.",
+    "impact": ["Reduced production losses", "Improved operational efficiency"],
+    "status": "confidential"
+  }
+]
