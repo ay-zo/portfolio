@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import { Space_Grotesk, DM_Sans, Inter } from "next/font/google";
 import Navbar from "./components/navbar";
 import Providers from "./lib/providers";
+import { EntryAnimationProvider } from "./context/entry-animation-context";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import NormalizeRoute from "@/lib/normalize-route";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-label",
@@ -13,8 +15,8 @@ const spaceGrotesk = Space_Grotesk({
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
-  title: "Portfolio",
-  description: "A personal portfolio powered by 3D and atmospheric design.",
+  title: "Andy Zhuo | Portfolio",
+  description: "UX Design Portfolio",
 };
 
 export default function RootLayout({
@@ -35,8 +37,11 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col font-sans bg-background text-foreground">
         <Providers>
-          <Navbar />
-          {children}
+          <EntryAnimationProvider>
+            <NormalizeRoute />
+            <Navbar />
+            {children}
+          </EntryAnimationProvider>
         </Providers>
       </body>
     </html>

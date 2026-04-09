@@ -1,14 +1,3 @@
-"use client";
-
-import {
-  motion,
-  useMotionTemplate,
-  useScroll,
-  useTransform,
-} from "framer-motion";
-import Link from "next/link";
-import Logo from "./logo";
-
 /**
  * Navbar
  *
@@ -21,17 +10,40 @@ import Logo from "./logo";
  * - Top-level navigation links
  *
  * Data dependencies:
- * - None; static route definitions
+ * - EntryAnimationContext (controls initial slide-in on home page)
  *
  * UX notes:
  * - The nav surface fades in only after scroll starts so hero content remains
  *   visually unobstructed on first paint.
+ * - On the home page, the navbar slides in from above after the loading
+ *   screen completes to create a polished entry sequence.
  *
  * Domain notes:
  * - This is a global layout component and should stay lightweight.
  */
+
+"use client";
+
+import {
+  motion,
+  useMotionTemplate,
+  useScroll,
+  useTransform,
+} from "framer-motion";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { type MouseEvent } from "react";
+import Logo from "./logo";
+import { useEntryAnimation } from "../context/entry-animation-context";
+import { useDownloadResume } from "../hooks/use-download-resume";
+
 export default function Navbar() {
   const { scrollY } = useScroll();
+  const { entryComplete } = useEntryAnimation();
+  const { downloadResume } = useDownloadResume();
+  const pathname = usePathname();
+  const router = useRouter();
+
   const scrollPresence = useTransform(scrollY, [0, 48], [0, 1], {
     clamp: true,
   });
@@ -48,15 +60,46 @@ export default function Navbar() {
       label: "Work",
       href: "/#work",
     },
-    // {
-    //   label: "About",
-    //   href: "/about",
-    // },
-    {
-      label: "Resume",
-      href: "/resume",
-    },
   ];
+
+  const navActionClass =
+    "relative group text-title uppercase tracking-wide text-secondary hover:text-primary transition-all duration-300 cursor-pointer " +
+    "after:absolute after:left-0 after:-bottom-[8px] after:h-[2px] after:w-full " +
+    "after:origin-left after:scale-x-0 after:bg-brand-primary " +
+    "after:transition-transform after:duration-300 after:ease-out hover:after:scale-x-100";
+
+  /**
+   * Smoothly scrolls to the work section on the home page.
+   *
+   * Why:
+   * Route hash-only navigation does not re-trigger once the URL already
+   * contains `#work`, so this imperative scroll keeps every click actionable.
+   */
+  const scrollToWorkSection = () => {
+    document.getElementById("work")?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
+
+  /**
+   * Handles the Work nav click with route-aware behavior.
+   *
+   * Behavior:
+   * - On home: always smooth-scrolls to #work (even if hash is unchanged)
+   * - Off home: navigates to /#work so Home can perform the same animated scroll
+   */
+  const handleWorkClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+
+    if (pathname !== "/") {
+      router.push("/#work");
+      return;
+    }
+
+    scrollToWorkSection();
+    window.history.replaceState(null, "", "/#work");
+  };
 
   return (
     <motion.nav
@@ -65,6 +108,9 @@ export default function Navbar() {
         backgroundColor: navSurface,
         backdropFilter: navBlur,
       }}
+      initial={entryComplete ? { y: 0 } : { y: "-100%" }}
+      animate={entryComplete ? { y: 0 } : { y: "-100%" }}
+      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
     >
       <div className="flex justify-between items-center text-white font-sans">
         <Link
@@ -80,11 +126,20 @@ export default function Navbar() {
           <Link
             key={item.href}
             href={item.href}
-            className="text-title uppercase tracking-wide text-secondary"
+            prefetch={false}
+            onClick={item.label === "Work" ? handleWorkClick : undefined}
+            className={navActionClass}
           >
             {item.label}
           </Link>
         ))}
+        <button
+          type="button"
+          onClick={downloadResume}
+          className={navActionClass}
+        >
+          Resume
+        </button>
       </div>
     </motion.nav>
   );
