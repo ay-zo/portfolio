@@ -33,7 +33,7 @@ export default function CaseButton({ label, href, status }: CaseButtonProps) {
   );
 
   return status === "confidential" ? (
-    <button className={buttonClass}>
+    <button className={buttonClass} onClick={handleClick}>
       <Lock className="lg:w-3.5 lg:h-3.5 w-5 h-5" />
       <span>{label}</span>
     </button>
