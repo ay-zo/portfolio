@@ -128,7 +128,8 @@ export default function Home() {
               </h1>
             </div>
             <p className="text-headline leading-headline font-semibold max-w-1/2 ">
-              Some fluffy text here
+              Designing intelligent systems for complex problems, shaped by real
+              people and lived experiences.
             </p>
           </div>
         </div>
