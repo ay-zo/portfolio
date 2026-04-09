@@ -148,6 +148,8 @@ export default function Home() {
        * Outer: entry fade-in controlled by framer-motion animate
        * Inner: scroll-driven fade controlled by heroDecorationOpacity MotionValue
        * Nesting avoids the animate vs style.opacity conflict in framer-motion.
+       * The .aurora-gradient CSS class handles desktop vs mobile positioning
+       * (bottom-right on desktop, centered on mobile).
        */}
       <motion.div
         className="pointer-events-none absolute top-[-20%] bottom-[-20%] left-1/2 -translate-x-1/2 w-screen max-w-screen mb-20 -z-10"
@@ -160,44 +162,15 @@ export default function Home() {
         }}
       >
         <motion.div
-          className="w-full h-full"
-          style={{
-            opacity: heroDecorationOpacity,
-            background: `
-        radial-gradient(
-          ellipse 88% 28% at 88% 92%,
-          oklch(from var(--color-brand-primary) l c h / 0.95) 0%,
-          oklch(from var(--color-brand-primary) l c h / 0.75) 20%,
-          oklch(from var(--color-brand-secondary) l c h / 0.35) 45%,
-          oklch(from var(--color-brand-secondary) l c h / 0) 72%
-        ),
-        radial-gradient(
-          ellipse 5% 35% at 92% 102%,
-          oklch(from var(--color-brand-primary) l c h / 0.55) 0%,
-          oklch(from var(--color-brand-secondary) l c h / 0.28) 30%,
-          oklch(from var(--color-brand-secondary) l c h / 0.10) 55%,
-          oklch(from var(--color-brand-secondary) l c h / 0) 80%
-        ),
-        radial-gradient(
-          ellipse 25% 120% at 70% 115%,
-          oklch(from var(--color-brand-primary) l c h / 0.35) 0%,
-          oklch(from var(--color-brand-secondary) l c h / 0.25) 35%,
-          oklch(from var(--color-brand-secondary) l c h / 0) 80%
-        ),
-        #111318
-      `,
-            backgroundSize: "112% 100%",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-            filter: "blur(5em)",
-          }}
+          className="w-full h-full aurora-gradient"
+          style={{ opacity: heroDecorationOpacity }}
         />
       </motion.div>
 
       <div className="relative flex min-h-screen max-h-screen w-full items-center justify-center overflow-hidden font-sans">
-        {/* SplineScene — fades in after loading completes */}
+        {/* SplineScene — fades in after loading completes; hidden on mobile */}
         <motion.div
-          className="absolute inset-0"
+          className="absolute inset-0 hidden lg:block"
           initial={{ opacity: 0 }}
           animate={entryComplete ? { opacity: 1 } : { opacity: 0 }}
           transition={{
@@ -210,7 +183,7 @@ export default function Home() {
         </motion.div>
 
         <div className="absolute bottom-0 left-0 w-full h-full flex">
-          <div className="flex flex-col items-center justify-center items-start w-full px-36 gap-6">
+          <div className="flex flex-col justify-center items-start w-full px-10 lg:px-36 gap-4 lg:gap-6">
             {/* Label line — simple opacity fade after typewriter lines finish */}
             <div className="flex flex-col items-start justify-center">
               <motion.p
@@ -255,7 +228,7 @@ export default function Home() {
              * Reserving this space prevents the centered stack from shifting upward
              * when line 2 mounts and begins typing.
              */}
-            <div className="relative max-w-1/2">
+            <div className="relative max-w-full lg:max-w-1/2">
               <p
                 aria-hidden
                 className="invisible text-headline leading-headline font-semibold"

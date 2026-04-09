@@ -18,14 +18,16 @@ export default function ScrollIndicator({ opacity }: ScrollIndicatorProps) {
   return (
     <motion.button
       type="button"
-      className="absolute bottom-5 left-1/2 flex -translate-x-1/2 flex-col items-center justify-center cursor-pointer transition-all duration-300 text-secondary hover:text-primary"
+      className="absolute bottom-5 left-1/2 flex -translate-x-1/2 flex-col items-center justify-center cursor-pointer transition-all duration-300 text-inverted lg:text-secondary hover:text-primary"
       style={{ opacity }}
       aria-label="Scroll to work"
       onClick={handleClick}
     >
-      <p className="text-label-lg uppercase tracking-wide">Preview my work</p>
+      <p className="text-headline lg:text-label-lg uppercase tracking-wide">
+        Preview my work
+      </p>
 
-      <div className="flex flex-col items-center justify-center -space-y-2.5">
+      <div className="flex flex-col items-center justify-center -space-y-3.5 lg:-space-y-2.5">
         <motion.div
           animate={{ opacity: [0, 0, 1, 1, 0] }}
           transition={{
@@ -35,7 +37,7 @@ export default function ScrollIndicator({ opacity }: ScrollIndicatorProps) {
             ease: "easeInOut",
           }}
         >
-          <ChevronDown className="h-4 w-4" />
+          <ChevronDown className="lg:h-4 lg:w-4 h-5 w-5" />
         </motion.div>
 
         <motion.div
@@ -47,7 +49,7 @@ export default function ScrollIndicator({ opacity }: ScrollIndicatorProps) {
             ease: "easeInOut",
           }}
         >
-          <ChevronDown className="h-4 w-4" />
+          <ChevronDown className="lg:h-4 lg:w-4 h-5 w-5" />
         </motion.div>
       </div>
     </motion.button>

@@ -17,6 +17,8 @@
  *   visually unobstructed on first paint.
  * - On the home page, the navbar slides in from above after the loading
  *   screen completes to create a polished entry sequence.
+ * - On mobile (<lg), the logo is centered and nav links collapse into a
+ *   hamburger button with a dropdown overlay.
  *
  * Domain notes:
  * - This is a global layout component and should stay lightweight.
@@ -25,6 +27,7 @@
 "use client";
 
 import {
+  AnimatePresence,
   motion,
   useMotionTemplate,
   useScroll,
@@ -32,7 +35,7 @@ import {
 } from "framer-motion";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { type MouseEvent } from "react";
+import { type MouseEvent, useState } from "react";
 import Logo from "./logo";
 import { useEntryAnimation } from "../context/entry-animation-context";
 import { useDownloadResume } from "../hooks/use-download-resume";
@@ -43,6 +46,7 @@ export default function Navbar() {
   const { downloadResume } = useDownloadResume();
   const pathname = usePathname();
   const router = useRouter();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const scrollPresence = useTransform(scrollY, [0, 48], [0, 1], {
     clamp: true,
@@ -88,9 +92,11 @@ export default function Navbar() {
    * Behavior:
    * - On home: always smooth-scrolls to #work (even if hash is unchanged)
    * - Off home: navigates to /#work so Home can perform the same animated scroll
+   * - Closes the mobile menu if open
    */
   const handleWorkClick = (event: MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
+    setMobileMenuOpen(false);
 
     if (pathname !== "/") {
       router.push("/#work");
@@ -101,46 +107,122 @@ export default function Navbar() {
     window.history.replaceState(null, "", "/#work");
   };
 
+  /** Triggers resume download and closes the mobile menu. */
+  const handleResumeClick = () => {
+    setMobileMenuOpen(false);
+    downloadResume();
+  };
+
   return (
     <motion.nav
-      className="fixed top-0 left-0 w-full h-20 z-50 flex flex-row justify-between items-center px-10 transition-all duration-800"
+      className="fixed top-0 left-0 w-full z-50 overflow-hidden lg:h-20"
       style={{
         backgroundColor: navSurface,
         backdropFilter: navBlur,
+        WebkitBackdropFilter: navBlur,
       }}
       initial={entryComplete ? { y: 0 } : { y: "-100%" }}
-      animate={entryComplete ? { y: 0 } : { y: "-100%" }}
-      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      animate={{
+        y: entryComplete ? 0 : "-100%",
+        height: mobileMenuOpen ? 160 : 64,
+      }}
+      transition={{
+        y: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+        height: { duration: 0.3, ease: [0.22, 1, 0.36, 1] },
+      }}
     >
-      <div className="flex justify-between items-center text-white font-sans">
-        <Link
-          href="/"
-          className="uppercase font-light tracking-wider text-title flex flex-row items-center gap-4"
-        >
-          <Logo />
-          Andy Zhuo
-        </Link>
-      </div>
-      <div className="flex justify-end items-center gap-8 font-sans">
-        {navItems.map((item) => (
+      <div className="h-16 lg:h-20 flex flex-row justify-center lg:justify-between items-center px-6 lg:px-10 relative">
+        <div className="flex items-center text-white font-sans">
           <Link
-            key={item.href}
-            href={item.href}
-            prefetch={false}
-            onClick={item.label === "Work" ? handleWorkClick : undefined}
+            href="/"
+            className="uppercase font-light tracking-wider text-title flex flex-row items-center gap-4"
+          >
+            <Logo />
+            Andy Zhuo
+          </Link>
+        </div>
+
+        <div className="hidden lg:flex justify-end items-center gap-8 font-sans">
+          {navItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              prefetch={false}
+              onClick={item.label === "Work" ? handleWorkClick : undefined}
+              className={navActionClass}
+            >
+              {item.label}
+            </Link>
+          ))}
+          <button
+            type="button"
+            onClick={downloadResume}
             className={navActionClass}
           >
-            {item.label}
-          </Link>
-        ))}
+            Resume
+          </button>
+        </div>
+
         <button
           type="button"
-          onClick={downloadResume}
-          className={navActionClass}
+          className="lg:hidden absolute right-6 top-1/2 -translate-y-1/2 p-2 text-secondary hover:text-primary transition-colors duration-200"
+          onClick={() => setMobileMenuOpen((prev) => !prev)}
+          aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
         >
-          Resume
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
+            {mobileMenuOpen ? (
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            ) : (
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            )}
+          </svg>
         </button>
       </div>
+
+      <AnimatePresence initial={false}>
+        {mobileMenuOpen && (
+          <motion.div
+            className="lg:hidden flex flex-col items-center gap-6 px-6 pb-6 pt-2 font-sans"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+          >
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                prefetch={false}
+                onClick={item.label === "Work" ? handleWorkClick : undefined}
+                className={navActionClass}
+              >
+                {item.label}
+              </Link>
+            ))}
+            <button
+              type="button"
+              onClick={handleResumeClick}
+              className={navActionClass}
+            >
+              Resume
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.nav>
   );
 }

@@ -27,6 +27,7 @@
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
   --color-muted: var(--muted);
+  --color-inverted: var(--inverted);
 
   --color-brand-primary: var(--accent-primary);
   --color-brand-secondary: var(--accent-secondary);
@@ -45,38 +46,62 @@
   --font-label: var(--font-label);
 
   /* Type scale */
-  --text-hero: 5rem;
-  --text-headline: 1.5rem;
-  --text-title: 1rem;
-  --text-body: 0.875rem;
-  --text-label-sm: 0.75rem;
-  --text-label-lg: 1rem;
-  --text-nav-item: 1rem;
+  --text-hero: var(--font-size-hero);
+  --text-headline: var(--font-size-headline);
+  --text-title: var(--font-size-title);
+  --text-body: var(--font-size-body);
+  --text-label-sm: var(--font-size-label-sm);
+  --text-label-lg: var(--font-size-label-lg);
+  --text-nav-item: var(--font-size-nav-item);
 
   /* Leading */
-  --leading-hero: 6.875rem;
-  --leading-headline: 1.2;
-  --leading-title: 1.4;
-  --leading-body: 1.6;
-  --leading-label-sm: 1.4;
-  --leading-label-lg: 1.4;
-  --leading-nav-item: 1.4;
+  --leading-hero: var(--line-height-hero);
+  --leading-headline: var(--line-height-headline);
+  --leading-title: var(--line-height-title);
+  --leading-body: var(--line-height-body);
+  --leading-label-sm: var(--line-height-label-sm);
+  --leading-label-lg: var(--line-height-label-lg);
+  --leading-nav-item: var(--line-height-nav-item);
 
   /* Weights / tracking */
   --font-weight-title: 500;
   --font-weight-body: 400;
   --font-weight-label: 500;
-  --tracking-label: 0.04em;
+  --tracking-label: var(--letter-spacing-label);
 }
 
 :root {
-  /* Dark default */
+  /* Type scale */
+  --font-size-hero: 5rem;
+  --font-size-headline: 1.5rem;
+  --font-size-title: 1rem;
+  --font-size-body: 0.875rem;
+  --font-size-label-sm: 0.75rem;
+  --font-size-label-lg: 1rem;
+  --font-size-nav-item: 1rem;
+
+  /* Leading */
+  --line-height-hero: 6.875rem;
+  --line-height-headline: 1.2;
+  --line-height-title: 1.4;
+  --line-height-body: 1.6;
+  --line-height-label-sm: 1.4;
+  --line-height-label-lg: 1.4;
+  --line-height-nav-item: 1.4;
+
+  /* Weights / tracking */
+  --font-weight-title: 500;
+  --font-weight-body: 400;
+  --font-weight-label: 500;
+  --letter-spacing-label: 0.04em;
+
   --background: var(--neutral-950);
   --foreground: var(--neutral-100);
 
   --primary: var(--neutral-100);
   --secondary: var(--neutral-400);
   --muted: var(--neutral-600);
+  --inverted: var(--neutral-900);
 
   --accent-primary: var(--brand-primary);
   --accent-secondary: var(--brand-secondary);
@@ -107,9 +132,99 @@
   --primary: var(--neutral-950);
   --secondary: var(--neutral-600);
   --muted: var(--neutral-500);
+  --inverted: var(--neutral-100);
 
   --accent-primary: var(--brand-primary);
   --accent-secondary: var(--brand-secondary);
   --accent-primary-muted: var(--brand-primary-muted);
   --accent-secondary-muted: var(--brand-secondary-muted);
+}
+
+/* Mobile breakpoint — covers both portrait and landscape phone orientations */
+@media (max-width: 1023px) {
+  :root {
+    --font-size-hero: 2.5rem;
+    --line-height-hero: 3.5rem;
+
+    --font-size-headline: 1rem;
+    --line-height-headline: 1.2rem;
+
+    --font-size-title: 0.875rem;
+    --line-height-title: 1.2rem;
+
+    --font-size-body: 0.75rem;
+    --line-height-body: 1rem;
+
+    --font-size-label-sm: 0.5rem;
+    --line-height-label-sm: 0.875rem;
+
+    --font-size-label-lg: 0.675rem;
+    --line-height-label-lg: 1rem;
+
+    --font-size-nav-item: 0.875rem;
+    --line-height-nav-item: 1rem;
+
+    --letter-spacing-nav-item: 0.03em;
+  }
+}
+
+/*
+ * Aurora gradient backdrop used on the home hero section.
+ * Desktop: gradient anchored bottom-right for depth behind the Spline scene.
+ * Mobile: gradient centered for a balanced look without the 3D scene.
+ */
+.aurora-gradient {
+  background:
+    radial-gradient(
+      ellipse 88% 28% at 88% 92%,
+      oklch(from var(--color-brand-primary) l c h / 0.95) 0%,
+      oklch(from var(--color-brand-primary) l c h / 0.75) 20%,
+      oklch(from var(--color-brand-secondary) l c h / 0.35) 45%,
+      oklch(from var(--color-brand-secondary) l c h / 0) 72%
+    ),
+    radial-gradient(
+      ellipse 5% 35% at 92% 102%,
+      oklch(from var(--color-brand-primary) l c h / 0.55) 0%,
+      oklch(from var(--color-brand-secondary) l c h / 0.28) 30%,
+      oklch(from var(--color-brand-secondary) l c h / 0.1) 55%,
+      oklch(from var(--color-brand-secondary) l c h / 0) 80%
+    ),
+    radial-gradient(
+      ellipse 25% 120% at 70% 115%,
+      oklch(from var(--color-brand-primary) l c h / 0.35) 0%,
+      oklch(from var(--color-brand-secondary) l c h / 0.25) 35%,
+      oklch(from var(--color-brand-secondary) l c h / 0) 80%
+    ),
+    #111318;
+  background-size: 112% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(5em);
+}
+
+@media (max-width: 1023px) {
+  .aurora-gradient {
+    background:
+      radial-gradient(
+        ellipse 140% 85% at 50% 100%,
+        oklch(from var(--color-brand-primary) l c h / 0.95) 0%,
+        oklch(from var(--color-brand-primary) l c h / 0.75) 12%,
+        oklch(from var(--color-brand-secondary) l c h / 0.38) 28%,
+        oklch(from var(--color-brand-secondary) l c h / 0.16) 42%,
+        oklch(from var(--color-brand-secondary) l c h / 0.05) 52%,
+        oklch(from var(--color-brand-secondary) l c h / 0) 62%
+      ),
+      radial-gradient(
+        ellipse 110% 70% at 50% 100%,
+        oklch(from var(--color-brand-primary) l c h / 0.22) 0%,
+        oklch(from var(--color-brand-secondary) l c h / 0.1) 30%,
+        oklch(from var(--color-brand-secondary) l c h / 0) 58%
+      ),
+      #111318;
+
+    background-size: 140% 100%;
+    background-position: bottom center;
+    background-repeat: no-repeat;
+    filter: blur(4.5em);
+  }
 }

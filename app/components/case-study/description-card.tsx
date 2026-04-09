@@ -20,8 +20,13 @@
 "use client";
 
 import { cn } from "@/app/lib/utils";
-import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
-import { useRef } from "react";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  type MotionValue,
+} from "framer-motion";
+import { useEffect, useState, useRef } from "react";
 import CaseButton from "./case-button";
 
 interface DescriptionCardProps {
@@ -67,6 +72,15 @@ export default function DescriptionCard({
     offset: ["start end", "start start"],
   });
 
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 1024);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
   /**
    * Maps card visibility progress to staged text reveals.
    *
@@ -74,11 +88,29 @@ export default function DescriptionCard({
    * Text should begin only after at least one-third of the card is visible.
    * Each subsequent block then cascades in before full alignment.
    */
-  const metaOpacity = useTransform(visibilityProgress, [0.33, 0.52], [0, 1]);
-  const titleOpacity = useTransform(visibilityProgress, [0.42, 0.64], [0, 1]);
-  const impactOpacity = useTransform(visibilityProgress, [0.52, 0.76], [0, 1]);
-  const ctaOpacity = useTransform(visibilityProgress, [0.62, 0.86], [0, 1]);
+  const metaOpacity = useTransform(
+    visibilityProgress,
+    isMobile ? [0.15, 0.28] : [0.33, 0.52],
+    [0, 1],
+  );
 
+  const titleOpacity = useTransform(
+    visibilityProgress,
+    isMobile ? [0.2, 0.34] : [0.42, 0.64],
+    [0, 1],
+  );
+
+  const impactOpacity = useTransform(
+    visibilityProgress,
+    isMobile ? [0.26, 0.4] : [0.52, 0.76],
+    [0, 1],
+  );
+
+  const ctaOpacity = useTransform(
+    visibilityProgress,
+    isMobile ? [0.32, 0.46] : [0.62, 0.86],
+    [0, 1],
+  );
   const metaMotionStyles = { x: textX, opacity: metaOpacity };
   const titleMotionStyles = { x: textX, opacity: titleOpacity };
   const impactMotionStyles = { x: textX, opacity: impactOpacity };
@@ -89,14 +121,14 @@ export default function DescriptionCard({
       ref={cardRef}
       className={cn(
         "h-full flex flex-col justify-between bg-surface-1/80 border border-stroke rounded-3xl corner-smoothing-[0.6]",
-        "px-12 pt-36 pb-12",
+        "px-6 py-16 lg:px-12 lg:pt-36 lg:pb-12",
         "shadow-lg",
         className || "",
       )}
     >
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-4 lg:gap-8">
         <motion.div
-          className="flex flex-row items-center gap-2 text-secondary uppercase text-label-sm font-medium font-label w-full"
+          className="flex flex-row items-center gap-2 text-secondary uppercase text-label-lg lg:text-label-sm font-medium font-label w-full"
           style={metaMotionStyles}
         >
           <div className="flex flex-row items-center">
@@ -111,7 +143,7 @@ export default function DescriptionCard({
           <p>{year}</p>
         </motion.div>
         <motion.div
-          className="flex flex-col gap-4 max-w-[85%]"
+          className="flex flex-col gap-2 lg:gap-4 max-w-full lg:max-w-[85%]"
           style={titleMotionStyles}
         >
           <h2 className="text-headline font-semibold uppercase leading-headline">
@@ -122,19 +154,18 @@ export default function DescriptionCard({
           </p>
         </motion.div>
       </div>
-      <motion.div
-        className="flex gap-10"
-        style={impactMotionStyles}
-      >
+      <motion.div className="flex gap-10" style={impactMotionStyles}>
         {impact.map((item, i) => {
           const [value, ...rest] = item.split(" ");
           const label = rest.join(" ");
           return (
             <div key={i} className="flex flex-col">
-              <p className="text-headline font-semibold leading-headline text-secondary">
+              <p className="text-3xl lg:text-headline font-semibold leading-3xllg:leading-headline text-secondary">
                 {value}
               </p>
-              <p className="text-label-sm text-muted uppercase">{label}</p>
+              <p className="text-label-lg lg:text-label-sm text-muted uppercase">
+                {label}
+              </p>
             </div>
           );
         })}
