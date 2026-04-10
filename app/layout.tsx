@@ -36,10 +36,10 @@ export default function RootLayout({
         inter.variable,
       )}
     >
+      <GoogleAnalytics gaId="G-TB6WHNRW8J" />
       <body className="min-h-full flex flex-col font-sans bg-background text-foreground">
         <Providers>
           <EntryAnimationProvider>
-            <GoogleAnalytics gaId="G-TB6WHNRW8J" />
             <NormalizeRoute />
             <Navbar />
             {children}
