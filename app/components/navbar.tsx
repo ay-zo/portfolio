@@ -86,6 +86,10 @@ export default function Navbar() {
     });
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   /**
    * Handles the Work nav click with route-aware behavior.
    *
@@ -135,6 +139,7 @@ export default function Navbar() {
         <div className="flex items-center text-white font-sans">
           <Link
             href="/"
+            onClick={scrollToTop}
             className="uppercase font-light tracking-wider text-title flex flex-row items-center gap-4"
           >
             <Logo />
