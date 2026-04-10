@@ -18,7 +18,7 @@ export default function ScrollIndicator({ opacity }: ScrollIndicatorProps) {
   return (
     <motion.button
       type="button"
-      className="absolute bottom-5 left-1/2 flex -translate-x-1/2 flex-col items-center justify-center cursor-pointer transition-all duration-300 text-inverted lg:text-secondary hover:text-primary"
+      className="absolute bottom-10 lg:bottom-5 left-1/2 flex -translate-x-1/2 flex-col items-center justify-center cursor-pointer transition-all duration-300 text-inverted lg:text-secondary hover:text-primary"
       style={{ opacity }}
       aria-label="Scroll to work"
       onClick={handleClick}

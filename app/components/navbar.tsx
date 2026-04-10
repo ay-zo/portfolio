@@ -124,14 +124,14 @@ export default function Navbar() {
       initial={entryComplete ? { y: 0 } : { y: "-100%" }}
       animate={{
         y: entryComplete ? 0 : "-100%",
-        height: mobileMenuOpen ? 160 : 64,
+        height: mobileMenuOpen ? 160 : "auto",
       }}
       transition={{
         y: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
         height: { duration: 0.3, ease: [0.22, 1, 0.36, 1] },
       }}
     >
-      <div className="h-16 lg:h-20 flex flex-row justify-center lg:justify-between items-center px-6 lg:px-10 relative">
+      <div className="h-16 lg:h-18 flex flex-row justify-center lg:justify-between items-center px-6 lg:px-10 relative">
         <div className="flex items-center text-white font-sans">
           <Link
             href="/"

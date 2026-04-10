@@ -183,7 +183,7 @@ export default function Home() {
         </motion.div>
 
         <div className="absolute bottom-0 left-0 w-full h-full flex">
-          <div className="flex flex-col justify-center items-start w-full px-10 lg:px-36 gap-4 lg:gap-6">
+          <div className="flex w-full -translate-y-6 flex-col items-start justify-center px-10 lg:translate-y-0 lg:px-36 gap-4 lg:gap-6">
             {/* Label line — simple opacity fade after typewriter lines finish */}
             <div className="flex flex-col items-start justify-center">
               <motion.p
@@ -268,7 +268,7 @@ export default function Home() {
           <div
             key={casePreview.id}
             id={i === 0 ? "work" : undefined}
-            className={i === 0 ? "w-full scroll-mt-28" : "w-full"}
+            className={i === 0 ? "w-full scroll-mt-24" : "w-full"}
           >
             <CaseRow
               key={casePreview.id}
