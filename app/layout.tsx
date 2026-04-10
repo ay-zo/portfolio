@@ -7,6 +7,7 @@ import { EntryAnimationProvider } from "./context/entry-animation-context";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import NormalizeRoute from "@/lib/normalize-route";
+import AuroraCursor from "./components/custom-cursor";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-label",
@@ -38,6 +39,7 @@ export default function RootLayout({
     >
       <GoogleAnalytics gaId="G-TB6WHNRW8J" />
       <body className="min-h-full flex flex-col font-sans bg-background text-foreground">
+        <AuroraCursor />
         <Providers>
           <EntryAnimationProvider>
             <NormalizeRoute />

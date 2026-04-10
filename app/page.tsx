@@ -235,7 +235,7 @@ export default function Home() {
               >
                 {HERO_LINE2_TEXT}
               </p>
-              <p className="absolute inset-0 text-headline leading-headline font-semibold">
+              <p className="absolute inset-0 text-headline leading-headline font-semibold text-secondary">
                 {heroLine1Done && (
                   <TypewriterText
                     text={HERO_LINE2_TEXT}

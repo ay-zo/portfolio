@@ -202,6 +202,24 @@
   filter: blur(5em);
 }
 
+/* Hide cursor on desktop devices */
+@media (pointer: fine) {
+  html,
+  body,
+  * {
+    cursor: none !important;
+  }
+}
+
+/* Keep default behavior on touch devices */
+@media (pointer: coarse) {
+  html,
+  body,
+  * {
+    cursor: auto;
+  }
+}
+
 @media (max-width: 1023px) {
   .aurora-gradient {
     background:
