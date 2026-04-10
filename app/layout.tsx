@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, DM_Sans, Inter } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import Navbar from "./components/navbar";
 import Providers from "./lib/providers";
 import { EntryAnimationProvider } from "./context/entry-animation-context";
@@ -38,6 +39,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col font-sans bg-background text-foreground">
         <Providers>
           <EntryAnimationProvider>
+            <GoogleAnalytics gaId="G-TB6WHNRW8J" />
             <NormalizeRoute />
             <Navbar />
             {children}
