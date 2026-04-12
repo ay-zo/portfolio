@@ -15,6 +15,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Lock } from "lucide-react";
 import { cn } from "@/app/lib/utils";
 
 interface MockupProps {
@@ -60,6 +61,21 @@ export default function Mockup({ className, id, align }: MockupProps) {
             : "landscape:-left-1/8 lg:-left-1/8",
         )}
       />
+      <div
+        className={cn(
+          "flex flex-row items-center gap-2 absolute text-muted text-label-sm tracking-wide whitespace-nowrap",
+
+          // Mobile → centered
+          "portrait:max-lg:bottom-1 portrait:max-lg:left-1/2 portrait:max-lg:-translate-x-1/2 portrait:max-lg:text-center",
+
+          // Desktop → edge aligned
+          "bottom-3",
+          align === "left" ? "lg:left-6" : "lg:right-6",
+        )}
+      >
+        <Lock className="w-3 h-3 text-muted" />
+        <p>Product visuals adapted to protect client confidentiality.</p>
+      </div>
     </div>
   );
 }
